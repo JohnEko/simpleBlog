@@ -10,7 +10,7 @@ const Register = () => {
           <div>
             
               <form className="register" action="">
-                <h1>Login</h1>
+                <h1>Register</h1>
                 <input type="text" placeholder="username" />
                 <input type="text" placeholder="password" />
                 <button>Register</button>
