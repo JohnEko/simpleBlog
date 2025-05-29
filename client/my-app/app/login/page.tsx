@@ -8,17 +8,17 @@ import "./login.css"
 const Login = () => {
   // const router = useRouter()
   return (
-    <div>LoginPage</div>
-          // <div>
+    
+          <div>
             
-          //     <form className="login" action="">
-          //       <h1>Login</h1>
-          //       <input type="text" placeholder="username" />
-          //       <input type="text" placeholder="password" />
-          //       <button>Login</button>
+              <form className="login" action="">
+                <h1>Login</h1>
+                <input type="text" placeholder="username" />
+                <input type="text" placeholder="password" />
+                <button>Login</button>
 
-          //     </form>
-          // </div>
+              </form>
+          </div>
     
   )
 }
