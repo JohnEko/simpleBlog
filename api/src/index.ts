@@ -1,11 +1,13 @@
 import express from 'express'
+const  cors = require('cors') 
 
 const app = express()
+app.use(cors())
 
 
-app.get('/', (req, res) => {
-    res.send('Typescript and node works fine')
+app.post('/register', (req, res) => {
+    res.json('Typescript and node works fine')
 })
-app.listen(4321, () => {
-    console.log('Running on 4321');
+app.listen(4000, () => {
+    console.log('Running on 4000');
 });
