@@ -1,13 +1,17 @@
 // import dbConnet from '../dbUtils/db'
 import express, { response } from 'express'
+import { isToken } from 'typescript'
 const  cors = require('cors')
 const mongoose = require('mongoose')
 const User = require('./models/Users') 
 const bcrypt = require('bcryptjs') //for password hashing
+const jwt = require('jsonwebtoken')
+
 
 const app = express()
 
 const salt = bcrypt.genSaltSync(10)
+const secret = 'jhfhfjfnffkfjdhjsseije'
 
 app.use(cors())
 app.use(express.json())
@@ -37,9 +41,19 @@ app.listen(4000, () => {
 });
 
 
-app.post('login', async (req, res) => {
+app.post('/login', async (req, res) => {
     const {username, password} = req.body
     const userDoc = await User.findOne({username})
     const passOK = bcrypt.compareSync(password, userDoc.password) //PASSWORD FROM OUR REQUEST AND PASSWORD FROM DATABASE FROM USER
-    response.json(passOK)
+    if (passOK) {
+        // login with right authentication
+        jwt.sign({username, id:userDoc._id}, secret, {}, (err, token) => {
+
+        })
+            
+        
+        
+    }else {
+        res.status(400).json('wrong password')
+    }
 })
