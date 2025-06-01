@@ -7,14 +7,47 @@ import "./login.css"
 
 const Login = () => {
   // const router = useRouter()
-  return (
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+
+   const submitLogin = async () =>{
+    const forData = {
+      username : username,
+      password :password
+    }
+    await fetch('http://localhost:4000/login', {
+      method: 'POST',
+      body: JSON.stringify(forData),
+      headers: {'Content-Type': 'application/json'}
+    })
+     .then(response => response.json())
+     .then((json) => {
+          console.log('Response:', json)})
+     .catch((error => {
+                    console.log(error);
+                }))
+
     
+  }
+
+  return (
           <div>
             
-              <form className="login" action="">
+              <form className="login" action={submitLogin}>
                 <h1>Login</h1>
-                <input type="text" placeholder="username" />
-                <input type="text" placeholder="password" />
+                <input type="text" 
+                       placeholder="username" 
+                       value={username} 
+                       onChange={(e) => 
+                       setUsername(e.target.value)}
+                  />
+                <input 
+                    type="password" 
+                    placeholder="password" 
+                    value={password}
+                    onChange={(e) => 
+                      setPassword(e.target.value)}
+                  />
                 <button>Login</button>
 
               </form>
@@ -23,3 +56,6 @@ const Login = () => {
   )
 }
 export default Login
+
+
+ 
