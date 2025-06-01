@@ -10,7 +10,7 @@ const Register = () => {
 
   const submitRegister = async () =>{
     const forData = {
-      email : username,
+      username : username,
       password :password
     }
     await fetch('http://localhost:4000/register', {
@@ -40,7 +40,7 @@ const Register = () => {
                        setUsername(e.target.value)}
                   />
                 <input 
-                    type="text" 
+                    type="password" 
                     placeholder="password" 
                     value={password}
                     onChange={(e) => 
