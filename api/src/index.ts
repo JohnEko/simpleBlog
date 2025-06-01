@@ -13,7 +13,7 @@ const app = express()
 const salt = bcrypt.genSaltSync(10)
 const secret = 'jhfhfjfnffkfjdhjsseije'
 
-app.use(cors())
+app.use(cors({Credential:true, origin:'http://localhost:3000'}))
 app.use(express.json())
 
 //dbConnet()
@@ -36,9 +36,6 @@ app.post('/register', async (req, res) => {
     }
     });
         
-app.listen(4000, () => {
-    console.log('Running on 4000')
-});
 
 
 app.post('/login', async (req, res) => {
@@ -47,13 +44,16 @@ app.post('/login', async (req, res) => {
     const passOK = bcrypt.compareSync(password, userDoc.password) //PASSWORD FROM OUR REQUEST AND PASSWORD FROM DATABASE FROM USER
     if (passOK) {
         // login with right authentication
-        jwt.sign({username, id:userDoc._id}, secret, {}, (err, token) => {
-
-        })
-            
-        
+        const token = jwt.sign({ username, id:userDoc._id}, secret, {
+        expiresIn: '1h',
+        });
+        res.status(200).json({ token });       
         
     }else {
         res.status(400).json('wrong password')
     }
 })
+
+app.listen(4000, () => {
+    console.log('Running on 4000')
+});
