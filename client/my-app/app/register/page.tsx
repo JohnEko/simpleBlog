@@ -13,7 +13,7 @@ const Register = () => {
       username : username,
       password :password
     }
-    await fetch('http://localhost:4000/register', {
+    await fetch('http://localhost:4000/register/', {
       method: 'POST',
       body: JSON.stringify(forData),
       headers: {'Content-Type': 'application/json'}

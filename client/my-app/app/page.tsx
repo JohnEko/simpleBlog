@@ -8,6 +8,7 @@ export default function Home() {
           <PropertyItems /> 
           <PropertyItems />
           <PropertyItems />
+        
        
     </main>
   );
