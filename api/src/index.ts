@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 const User = require('./models/Users') 
 const bcrypt = require('bcryptjs') //for password hashing
 const jwt = require('jsonwebtoken')
-
+const cookieParser = require('cookie-parser')
 
 const app = express()
 
@@ -15,8 +15,10 @@ const secret = 'jhfhfjfnffkfjdhjsseije'
 
 app.use(cors({Credential:true, origin:'http://localhost:3000'}))
 app.use(express.json())
-
+app.use(cookieParser())
 //dbConnet()
+
+
 
 
 app.post('/register', async (req, res) => {
@@ -43,15 +45,31 @@ app.post('/login', async (req, res) => {
     const userDoc = await User.findOne({username})
     const passOK = bcrypt.compareSync(password, userDoc.password) //PASSWORD FROM OUR REQUEST AND PASSWORD FROM DATABASE FROM USER
     if (passOK) {
-        // login with right authentication
-        const token = jwt.sign({ username, id:userDoc._id}, secret, {
-        expiresIn: '1h',
-        });
-        res.status(200).json({ token });       
+        // login with right authentication and set request header cookie to expire after an hour
+        jwt.sign({ username, id:userDoc._id}, secret, {}, (err: any, token: any) => {
+        if (err) throw err;
+         res.cookie('token', token).json({
+            id:userDoc._id,
+            username,
+         }); 
+        });      
         
     }else {
         res.status(400).json('wrong password')
     }
+})
+
+app.get('/profile', (req, res) => {
+   const token = req.cookies.secret
+   if (token) {
+    jwt.verify(token, secret, (err:any, token:any) =>{
+    if (err) throw err;
+        res.json(token)
+    })
+}})
+
+app.post('/logout', (req, res) => {
+    res.cookie('token', '').json('ok')
 })
 
 app.listen(4000, () => {

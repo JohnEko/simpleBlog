@@ -1,34 +1,43 @@
 'use client'
 
-import Router, { useRouter } from "next/router"
-import React, {useState, useEffect} from "react"
+import { useRouter } from "next/navigation"
+import React, {useState, useEffect, useContext} from "react"
 import "./login.css"
+import { UserContext } from "../component/navbar/UserContext"
 
 
 const Login = () => {
-  // const router = useRouter()
+  const router = useRouter()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const {userInfo, setUserInfo}: any = useContext(UserContext)
+
 
    const submitLogin = async () =>{
     const forData = {
       username : username,
       password :password
     }
-    await fetch('http://localhost:4000/login', {
+    const response = await fetch('http://localhost:4000/login', {
       method: 'POST',
       body: JSON.stringify(forData),
-      headers: {'Content-Type': 'application/json'}
+      headers: {'Content-Type': 'application/json'},
+      credentials: 'same-origin'
     })
-     .then(response => response.json())
-     .then((json) => {
-          console.log('Response:', json)})
-     .catch((error => {
-                    console.log(error);
-                }))
-
+      if (response.ok){
+        response.json()
+        .then(userInfo =>{
+        setUsername(userInfo)
+        router.push('/')
+        })
+        
+        
+      } else {
+        console.log('Your password is wrong')
+      }
     
   }
+
 
   return (
           <div>

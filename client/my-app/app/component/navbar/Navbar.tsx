@@ -11,6 +11,8 @@ const Navbar =() => {
     return(
         <main>
             <Header />
+            
+            
     
        </main>
     )
