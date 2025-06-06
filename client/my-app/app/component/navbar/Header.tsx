@@ -42,14 +42,12 @@ const username = userInfo?.username
                         {/* <Link href="/create">Create post</Link> */}
                      
                   <nav>
-                    {!username && (
+                    {!username ? (
                       <>
                         <Link href="/create">Create new post</Link>
                         <Link href={"/logout"}>Logout</Link>
                       </>
-                    )}
-
-                    {username && (
+                    ) : (
                       <>
                         <Link href={"/login"}>
                         Login

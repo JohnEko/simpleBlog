@@ -20,6 +20,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.15.1",
     "mongose": "^0.0.2-security",
+    "multer": "^2.0.1",
     "ts-node": "^10.9.2"
   },
   "devDependencies": {
