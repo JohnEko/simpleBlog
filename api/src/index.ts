@@ -7,6 +7,8 @@ const User = require('./models/Users')
 const bcrypt = require('bcryptjs') //for password hashing
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
+const multer = require('multer')
+const uploadMiddleware = multer({ dest: 'upload/'})
 
 const app = express()
 
@@ -19,6 +21,7 @@ app.use(cookieParser())
 //dbConnet()
 
 
+mongoose.connect('mongodb+srv://blog:london123@cluster0.e3nvvsu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 
 
 app.post('/register', async (req, res) => {
@@ -70,6 +73,11 @@ app.get('/profile', (req, res) => {
 
 app.post('/logout', (req, res) => {
     res.cookie('token', '').json('ok')
+})
+
+app.post('/create', uploadMiddleware.single('file'), (req, res) => {
+    res.json(req.files.file)
+
 })
 
 app.listen(4000, () => {
