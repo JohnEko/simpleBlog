@@ -3,9 +3,11 @@ import ReactQuill from 'react-quill-new'
 import 'react-quill-new/dist/quill.snow.css'
 import dynamic from 'next/dynamic';
 import "./createPost.css"
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-//const ReactQuill = dynamic(import("react-quill-new"),{ ssr: false });
+
+
+ dynamic(import('react-quill-new'), {ssr: false});
 
 
 const CreatePost = () => {
@@ -15,22 +17,35 @@ const CreatePost = () => {
   const [files, setFiles] = useState('')
 
   const createNewPost = async () => {
+    console.log('submitForm')
+    if ( 
+        title &&
+        summary &&
+        content &&
+        files
+    ){
       const formData = new FormData();
-      formData.set('title', title);
-      formData.set('summary', summary);
-      formData.set('content', content);
-      formData.set('file', files[0]);
+      formData.append('title', title);
+      formData.append('summary', summary);
+      formData.append('content', content);
+      formData.append('file', files[0]);
     
-      const response = await fetch('http://localhost:4000/create', {
-          method: 'POST',
-          body: formData,
+//       const response = await fetch('http://localhost:4000/create', {
+//           method: 'POST',
+//           body: formData,
 
-
-  })
+//   })
+//       console.log(response.formData)
+}
+useEffect(() => {
+  setFiles(files)
+}, [])
 }
   return (
     // <h2>CreatePost</h2>
       <form onSubmit={createNewPost}>
+         
+       
           <input type="title"  
               placeholder='Title' 
               value={title} 
@@ -43,6 +58,7 @@ const CreatePost = () => {
               />
           <input 
               type="file" 
+              accept='image/*'
               value={files}
               onChange={(e) => setFiles(e.target.value)}
             />
@@ -71,10 +87,10 @@ const CreatePost = () => {
                             "blockquote",
                             "code-block",
                             "list",
-                            "bullet",
                             "script",
                           ]}
                 />
+               
           <button style={{marginTop:'5px'}}>Create post</button>
       </form>
   )

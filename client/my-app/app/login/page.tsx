@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"
 import React, {useState, useEffect, useContext} from "react"
 import "./login.css"
 import { UserContext } from "../component/navbar/UserContext"
+import CreatePost from "../create/page"
 
 
 const Login = () => {
@@ -60,6 +61,7 @@ const Login = () => {
                 <button>Login</button>
 
               </form>
+              <CreatePost />
           </div>
     
   )
