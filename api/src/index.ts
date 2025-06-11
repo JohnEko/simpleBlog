@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs') //for password hashing
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
 const multer = require('multer')
-const uploadMiddleware = multer({ dest: 'upload/'})
+const uploadfileMiddlewaer = multer({ dest: 'uploads/'})
 
 const app = express()
 
@@ -75,9 +75,9 @@ app.post('/logout', (req, res) => {
     res.cookie('token', '').json('ok')
 })
 
-app.post('/create', uploadMiddleware.single('file'), (req, res) => {
-    res.json(req.files.file)
-
+app.post('/api/create', uploadfileMiddlewaer.single(),   (req, res) => {
+    console.log('files')
+    res.json(req.body)
 })
 
 app.listen(4000, () => {
